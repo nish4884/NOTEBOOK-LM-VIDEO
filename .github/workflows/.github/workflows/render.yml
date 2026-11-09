@@ -1,0 +1,28 @@
+name: Render NotebookLM Video
+
+on:
+  workflow_dispatch:
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Render MP4
+        run: npm run render
+
+      - name: Upload video
+        uses: actions/upload-artifact@v4
+        with:
+          name: notebooklm-video
+          path: out/video.mp4
